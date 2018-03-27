@@ -1,0 +1,13 @@
+﻿@page
+<h1>Hello, world!</h1>
+<h2>The time on the server is @DateTime.Now</h2>
+
+@functions {
+public string Message { get; set; } = $"The time on the server is {DateTime.Now}";
+}
+
+<h2>@Message</h2>
+
+<span>@Message</span>
+
+<strong>@Message</strong>

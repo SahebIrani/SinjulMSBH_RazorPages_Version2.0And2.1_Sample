@@ -1,0 +1,30 @@
+﻿@page
+@model ContactModel
+@{
+      ViewData[ "Title" ] = "Contact";
+}
+<h2>@ViewData[ "Title" ]</h2>
+<h3>@Model.Message</h3>
+
+<address>
+      One Microsoft Way<br />
+      Redmond, WA 98052-6399<br />
+      <abbr title="Phone">P:</abbr>
+      425.555.0100
+</address>
+
+<address>
+      <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+      <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>
+
+<form method="post">
+      <label asp-for="From"></label> <input type="text" asp-for="From" /><br>
+      <label asp-for="Email"></label> <input type="text" asp-for="Email" /><br>
+      <label asp-for="Subject"></label> <input type="text" asp-for="Subject" /><br>
+      <label asp-for="Comments"></label> <textarea asp-for="Comments"></textarea><br>
+      <input type="submit" />
+</form>
+
+<company organisation="@Model.Company"></company>
+<pager current-page="1" link-url="/page" total-pages="5"></pager>

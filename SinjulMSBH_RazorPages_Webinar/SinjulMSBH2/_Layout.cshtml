@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+      <title>Razor Pages Sample</title>
+</head>
+<body>
+      <a asp-page="/Index">Home</a>
+      @RenderBody( )
+      <a asp-page="/Customers/Create">Create</a> <br />
+      <a asp-page="/Customers/CreateDot">Create ./Index</a><br />
+      <a asp-page="/Customers/Create2Dot">Create ../Index</a><br />
+      <a asp-page="/Customers/CreateBlank">Create Index</a><br />
+      <a asp-page="/Customers/CreateFATH">Create Form Action TH</a><br />
+      <a asp-page="/Customers/CreateRoute">Create Route</a><br />
+      <a asp-page="/Customers/CreateTempData">Create TempData</a><br />
+
+      @*RedirectToPage(x)	      Page
+            RedirectToPage("/Index")	Pages/Index
+            RedirectToPage("./Index");	Pages/Customers/Index
+            RedirectToPage("../Index")	Pages/Index
+            RedirectToPage("Index")	      Pages/Customers/Index*@
+</body>
+</html>

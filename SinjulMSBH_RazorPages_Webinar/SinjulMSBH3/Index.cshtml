@@ -1,0 +1,950 @@
+﻿@page
+@{
+      var name = string.Empty;
+      if ( Request.HasFormContentType )
+      {
+            name = Request.Form[ "name" ];
+      }
+}
+
+<div style="margin-top:30px;">
+      <form method="post">
+            <div>Name: <input name="name" /></div>
+            <div><input type="submit" /></div>
+      </form>
+</div>
+<div>
+      @if ( !string.IsNullOrEmpty( name ) )
+      {
+            <p>Hello @name!</p>
+      }
+</div>
+
+@functions {
+[BindProperty]
+public string Name { get; set; }
+}
+
+<div style="margin-top:30px;">
+      <form method="post">
+            <div>Name: <input name="name" /></div>
+            <div><input type="submit" /></div>
+      </form>
+      @if ( !string.IsNullOrEmpty( Name ) )
+      {
+            <p>Hello @Name!</p>
+      }
+</div>
+
+@model SinjulMSBH_RazorPages_Webinar.SinjulMSBH3.IndexModel
+
+<div style="margin-top:30px;">
+      <form method="post">
+            <div>Name: <input asp-for="Name" /></div>
+            <div><input type="submit" /></div>
+      </form>
+      @if ( !string.IsNullOrEmpty( Model.Name ) )
+      {
+            <p>Hello @Model.Name!</p>
+      }
+</div>
+
+@section Scripts{
+      // content here
+}
+
+@* Razor Syntax*@
+
+@{
+      var numbers = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers )
+      {
+            @number
+      }
+}
+
+The time is @DateTime.Now
+
+@{
+      var numbers2 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers2 )
+      {
+            @(number * 10)
+      }
+}
+
+@{
+      var numbers3 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers3 )
+      {
+            @(number * 10)@:&nbsp;
+      }
+}
+
+@{
+      var numbers4 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers4 )
+      {
+            @(number * 10)@: * 10 = @(number * 10)
+      }
+}
+
+@{
+      var numbers5 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers5 )
+      {
+            <span>@(number * 10)&nbsp;</span>
+      }
+}
+
+@{
+      var numbers6 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers6 )
+      {
+            @(number * 10)<br />
+      }
+}
+
+@{
+      var numbers7 = Enumerable.Range(1, 10); //Get numbers from 1 - 10
+      foreach ( var number in numbers7 )
+      {
+            <text>@(number * 10) * 10 = @(number * 10)&nbsp;</text>
+      }
+}
+
+@{
+      /*Get numbers from 1 - 10*/
+      //Get numbers  between 1 - 10
+      @*Get numbers between 1 - 10*@
+      var numbers8 = Enumerable.Range(1, 10);
+      foreach ( var number in numbers8 )
+      {
+            @number
+      }
+}
+
+@* Get numbers between 1 - 10 *@
+
+@{ var numbers9 = Enumerable.Range(1, 10); }
+
+@foreach ( var number in numbers9 )
+{
+      @number
+}
+
+@for ( var i = 0 ; i < numbers.Count( ) ; i++ )
+{
+      @numbers.ElementAt( i )
+}
+
+@if ( numbers.Count( ) == 10 )
+{
+      @:10 Numbers - Good!
+}
+
+@{var condition = 1; var message = "";}
+
+@switch ( condition )
+{
+      case 1:
+            message = "Case 1";
+            break;
+      case 2:
+            message = "Case 2";
+            break;
+      case 3:
+            message = "Case 3";
+            break;
+      default:
+            message = "Default Case";
+            break;
+}
+
+@message
+
+@* Handler Methods in Razor Pages *@
+
+@functions{
+      public string Message { get; set; }
+
+      public void OnGet ( )
+      {
+            Message = "Get used";
+      }
+
+      public void OnPost ( )
+      {
+            Message = "Post used";
+      }
+}
+
+<h3>@Message</h3>
+<form method="post"><button class="btn btn-default">Click to post</button></form>
+<p><a href="/handlerexample" class="btn btn-default">Click to Get</a></p>
+
+@*Named Handler Methods*@
+
+@functions{
+      public string Message2 { get; set; } = "Initial Request";
+
+      public void OnGet2 ( )
+      {
+
+      }
+
+      public void OnPost2 ( )
+      {
+            Message2 = "Form Posted";
+      }
+
+      public void OnPostDelete ( )
+      {
+            Message2 = "Delete handler fired";
+      }
+
+      public void OnPostEdit ( int id )
+      {
+            Message2 = "Edit handler fired";
+      }
+
+      public void OnPostView ( int id )
+      {
+            Message2 = "View handler fired";
+      }
+}
+
+<div class="row">
+      <div class="col-lg-1">
+            <form asp-page-handler="edit" method="post">
+                  <button class="btn btn-default">Edit</button>
+            </form>
+      </div>
+      <div class="col-lg-1">
+            <form asp-page-handler="delete" method="post">
+                  <button class="btn btn-default">Delete</button>
+            </form>
+      </div>
+      <div class="col-lg-1">
+            <form asp-page-handler="view" method="post">
+                  <button class="btn btn-default">View</button>
+            </form>
+      </div>
+</div>
+<h3 class="clearfix">@Message2</h3>
+
+@* routing   *@
+
+@*@page "{handler?}"*@
+
+@functions  {
+
+public void OnPostView2 ( int id )
+{
+      Message = $"View handler fired for {id}";
+}
+
+}
+
+<div class="col-lg-1">
+      <form asp-page-handler="view2" method="post">
+            <button class="btn btn-default">View</button>
+            <input type="hidden" name="id" value="3" />
+      </form>
+</div>
+
+@*/Handlers/delete?id=10*@
+@*@page "{handler?}/{id?}"*@
+@*/Handlers/delete/10*@
+
+<form asp-page-handler="delete" asp-route-id="10" method="post">
+      <button class="btn btn-default">Delete</button>
+</form>
+
+@*Handling Multiple Actions For The Same Form*@
+
+@functions{
+      public async Task<IActionResult> OnPostRegisterAsync ( )
+      {
+            //…
+            return RedirectToPage( );
+      }
+
+      public async Task<IActionResult> OnPostRequestInfo ( )
+      {
+            //…
+            return RedirectToPage( );
+      }
+}
+
+<form method="post">
+      <button asp-page-handler="Register">Register Now</button>
+      <button asp-page-handler="RequestInfo">Request Info</button>
+</form>
+
+@*TagHelper*@
+
+@*The Anchor tag helper
+      Attribute	Description
+      action	The name of the action method on an MVC controller
+      all-route-data1	Multiple route parameter values
+      area	The name of the MVC area
+      controller	The name of the MVC controller
+      fragment2	The fragment in the URL
+      host	The domain
+      page3	The Razor page to link to
+      page-handler4	The Razor page handler method to invoke
+      protocol	The protocol (http, https, ftp etc)
+      route5	The name of the route
+      route-6	A single route parameter value*@
+
+<!a href="http://SinjulMSBH.com">Learn Razor Pages</!a>
+
+@tagHelperPrefix x
+<xa asp-page="/Index">Home</xa>
+
+@*@tagHelperPrefix x2:
+      <x2:a asp-page="/Index">Home</x2:a>*@
+
+@*The Anchor tag helper*@
+@{
+      var d = new Dictionary<string, string>
+{
+{ "key1", "value1" },
+{ "key2", "value2" }
+};
+}
+
+<a asp-all-route-data="d">Click</a>
+<a asp-fragment="notes">Click</a>
+<a asp-page="page">Click</a>
+<a asp-page="/folder/index">Folder</a>
+<a asp-page="page">Click</a>
+<a href="/page/">Click</a>
+
+@*The Cache Tag Helper
+
+      Attribute	Description
+      enabled1	Used to specify if this tag is enabled or not
+      expires-after2	Specifies the period of time after which the cached item should expire
+      expires-on3	Specifies the time at which the cached entry should expire
+      expires-sliding4	The period of time after the last access that the item should expire
+      priority5	Specifies the CacheItemPriority value of the cached item
+      vary-by6	Used to specify the parameters that determine whether different versions of the same content should be cached*@
+
+<cache enabled="DateTime.Now.DayOfWeek != DayOfWeek.Sunday">@DateTime.Now</cache>
+<cache expires-after="TimeSpan.FromHours(1)">@DateTime.Now</cache>
+<cache expires-on="new DateTimeOffset(new DateTime(2017, 6, 14, 8, 15, 0))">@DateTime.Now</cache>
+<cache expires-sliding="TimeSpan.FromMinutes(20)">@DateTime.Now</cache>
+<cache priority="CacheItemPriority.High">@DateTime.Now</cache>
+<cache vary-by-cookie="AppCookie1, AppCookie2">@DateTime.Now</cache>
+<cache vary-by-header="Accept-Language">@DateTime.Now</cache>
+<cache vary-by-query="id">@DateTime.Now</cache>
+<cache vary-by-route="key1, key2">@DateTime.Now</cache>
+<cache vary-by-user="true">@DateTime.Now</cache>
+<cache vary-by="@Model.Name">@DateTime.Now</cache>
+
+@*The Environment Tag Helper
+      names	The name(s) of the environment(s) for which the content should be rendered
+      include	The name(s) of the environment(s) for which the content should be rendered
+      exclude	The name(s) of the environment(s) for which the content should not be rendered*@
+<environment names="Development">
+      <link rel="stylesheet" href="~/css/style1.css" />
+      <link rel="stylesheet" href="~/css/style2.css" />
+</environment>
+<environment names="Staging, Test, Production">
+      <link rel="stylesheet" href="~/css/style.min.css" />
+</environment>
+
+@*The Formaction Tag Helper
+
+      Attribute	Description
+      action	The name of the action method on an MVC controller
+      all-route-data1	Multiple route parameter values
+      area	The name of the MVC area
+      controller	The name of the MVC controller
+      fragment2	The fragment in the URL
+      host	The domain
+      page3	The Razor page to link to
+      page-handler4	The Razor page handler method to invoke
+      protocol	The protocol (http, https, ftp etc)
+      route5	The name of the route
+      route-6	A single route parameter value*@
+
+@{
+      var d2 = new Dictionary<string, string>
+{
+{ "key1", "value1" },
+{ "key2", "value2" }
+};
+}
+
+<button asp-all-route-data="@d2">Submit</button>
+<button asp-fragment="notes">Submit</button>
+<button asp-page="page">Submit</button>
+
+@*The Image Tag Helper
+      Attribute	Description
+      append-version	A boolean value indicating whether to append the image URL with a file version*@
+
+<img asp-append-version="true" src="~/images/banner1.svg" />
+<img src="/images/banner1.svg?v=GaE_EmkeBf-yBbrJ26lpkGd4jkOSh1eVKJaNOw9I4uk" />
+<img src="/images/banner1.svg?v=qp53a_aCPkTojNdLo1S2IvprtETqDiat_cWYbj1z8Z0" />
+
+@*The Input Tag Helper
+      Attribute	Description
+      for	An expression to be evaluated against the current PageModel, usually a PageModel property name*@
+<form method="post">
+      <input asp-for="Member.PersonId" /><br />
+      <input asp-for="Member.Name" /><br />
+      <input asp-for="Member.Email" /><br />
+      <input asp-for="Member.Password" /><br />
+      <input asp-for="Member.Telephone" /><br />
+      <input asp-for="Member.Website" /><br />
+      <input asp-for="Member.DateOfBirth" /><br />
+      <input asp-for="Member.Salary" /><br />
+      <input asp-for="Member.SendSpam" /><br />
+      <input asp-for="Member.NumberOfCats" /><br />
+      <button>Submit</button>
+</form>
+<form method="post">
+      <input type="number" data-val="true" data-val-required="The PersonId field is required." id="Member_PersonId" name="Member.PersonId" value="" /><br />
+      <input type="text" id="Member_Name" name="Member.Name" value="" /><br />
+      <input type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." id="Member_Email" name="Member.Email" value="" /><br />
+      <input type="password" id="Member_Password" name="Member.Password" /><br />
+      <input type="tel" id="Member_Telephone" name="Member.Telephone" value="" /><br />
+      <input type="url" data-val="true" data-val-url="The Website field is not a valid fully-qualified http, https, or ftp URL." id="Member_Website" name="Member.Website" value="" /><br />
+      <input type="datetime-local" data-val="true" data-val-required="The Date of Birth field is required." id="Member_DateOfBirth" name="Member.DateOfBirth" value="" /><br />
+      <input type="text" data-val="true" data-val-number="The field Salary must be a number." data-val-required="The Salary field is required." id="Member_Salary" name="Member.Salary" value="" /><br />
+      <input data-val="true" data-val-required="The Send spam to me field is required." id="Member_SendSpam" name="Member.SendSpam" type="checkbox" value="true" /><br />
+      <input type="number" id="Member_NumberOfCats" name="Member.NumberOfCats" value="" /><br />
+      <button>Submit</button>
+      <input name="__RequestVerificationToken" type="hidden" value="CfDJ8I..." />
+      <input name="Member.SendSpam" type="hidden" value="false" />
+</form>
+
+The Label Tag Helper
+Attribute	Description
+for	An expression to be evaluated against the current page model
+@using System.ComponentModel.DataAnnotations
+@functions  {
+[Display( Name = "Email Address" )]
+public string EmailAddress { get; set; }
+}
+<label for="EmailAddress">Email Address</label>
+
+@*The Link Tag Helper
+      Attribute	Description
+      href-include	A comma separated list of globbed file patterns of CSS stylesheets to load. The glob patterns are assessed relative to the application's 'webroot' setting.
+      href-exclude	A comma separated list of globbed file patterns of CSS stylesheets to exclude from loading. The glob patterns are assessed relative to the application's 'webroot' setting. Must be used in conjunction with href-include
+      fallback-href	The URL of a CSS stylesheet to fallback to in the case the primary one fails.
+      fallback-href-include	A comma separated list of globbed file patterns of CSS stylesheets to fallback to in the case the primary one fails. The glob patterns are assessed relative to the application's 'webroot' setting.
+      fallback-href-exclude	A comma separated list of globbed file patterns of CSS stylesheets to exclude from the fallback list, in the case the primary one fails. The glob patterns are assessed relative to the application's 'webroot' setting. Must be used in conjunction with fallback-href-include.
+      fallback-test-class	The class name defined in the stylesheet to use for the fallback test. Must be used in conjunction with fallback-test-property and fallback-test-value, and either fallback-href or fallback-href-include.
+      fallback-test-property	The CSS property name to use for the fallback test. Must be used in conjunction with fallback-test-class and fallback-test-value, and either fallback-href or fallback-href-include.
+      fallback-test-value	The CSS property value to use for the fallback test. Must be used in conjunction with fallback-test-class and fallback-test-property, and either fallback-href or fallback-href-include.
+      append-version	Boolean value indicating if file version should be appended to the href urls.*@
+<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+      asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+      asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+<style>
+      .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0
+      }
+</style>
+<meta name="x-stylesheet-fallback-test" content="" class="sr-only" />
+<script>
+      !function (a, b, c, d) {
+            var e,
+                  f = document,
+                  g = f.getElementsByTagName("SCRIPT"),
+                  h = g[g.length - 1].previousElementSibling,
+                  i = f.defaultView && f.defaultView.getComputedStyle ? f.defaultView.getComputedStyle(h) : h.currentStyle;
+            if (i && i[a] !== b)
+                  for (e = 0; e < c.length; e++)
+                        f.write('<link href="' + c[e] + '" ' + d + " />")
+      }("position", "absolute", ["\/lib\/bootstrap\/dist\/css\/bootstrap.min.css"], "rel=\u0022stylesheet\u0022 ");
+</script>
+
+The Options Tag Helper
+<select asp-for="Number" asp-items="Model.Items">
+      <option value="">Pick one</option>
+</select>
+<select data-val="true" data-val-required="The Number field is required." id="Number" name="Number">
+      <option value="">Pick one</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+</select>
+
+<select asp-for="Number">
+      <option value="">Pick one</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+</select>
+<select data-val="true" data-val-required="The Number field is required." id="Number" name="Number">
+      <option value="">Pick one</option>
+      <option>1</option>
+      <option selected="selected">2</option>
+      <option>3</option>
+</select>
+
+@*The Script Tag Helper
+      Attribute	Description
+      src-include	A comma separated list of globbed file patterns of script files to load. The glob patterns are assessed relative to the application's 'webroot' setting.
+      src-exclude	A comma separated list of globbed file patterns of script files to exclude from loading. The glob patterns are assessed relative to the application's 'webroot' setting. Must be used in conjunction with src-include
+      fallback-src	The URL of a script file to fallback to in the case the primary one fails.
+      fallback-src-include	A comma separated list of globbed file patterns of script files to fallback to in the case the primary one fails. The glob patterns are assessed relative to the application's 'webroot' setting.
+      fallback-src-exclude	A comma separated list of globbed file patterns of script files to exclude from the fallback list, in the case the primary one fails. The glob patterns are assessed relative to the application's 'webroot' setting. Must be used in conjunction with fallback-src-include.
+      fallback-test	A Javascript expression to use for the fallback test. Should resolve to true if the primary script loads successfully.
+      append-version	Boolean value indicating if a file version token should be appended to the src urls.*@
+
+<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+        crossorigin="anonymous"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+</script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+        crossorigin="anonymous"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+</script>
+<script>
+      (window.jQuery && window.jQuery.fn && window.jQuery.fn.modal || document.write("\u003Cscript src=\u0022\/lib\/bootstrap\/dist\/js\/bootstrap.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\u0022\u003E\u003C\/script\u003E"));
+</script>
+
+@*The Select Tag Helper
+      Attribute	Description
+      for	The property on the PageModel that represents the selected element(s)
+      items	A collection of SelectListItem objects, a SelectList object or an enumeration that provide the options for the select list.*@
+@functions{
+      public void OnGet3 ( )
+      {
+            ViewData[ "Numbers" ] = Enumerable.Range( 1 , 5 )
+                .Select( n => new SelectListItem
+                {
+                      Value = n.ToString( ) ,
+                      Text = n.ToString( )
+                } ).ToList( );
+      }
+
+      public List<SelectListItem> Numbers => Enumerable.Range( 1 , 5 )
+             .Select( n => new SelectListItem
+             {
+                   Value = n.ToString( ) ,
+                   Text = n.ToString( )
+             } ).ToList( );
+
+      //      [BindProperty]
+      //      public int Person Person { get; set; }
+      //public List<Person> People { get; set; }
+      //public void OnGet ( )
+      //{
+      //      People = new List<Person> {
+      //new Person { Id = 1, Name="Mike" },
+      //new Person { Id = 2, Name="Pete" },
+      //new Person { Id = 3, Name="Katy" },
+      //new Person { Id = 4, Name="Carl" }
+      //};
+
+      //[BindProperty]
+      //public int Person Person { get; set; } = 3;
+      //public List<SelectListItem> People { get; set; }
+      //public void OnGet ( )
+      //{
+      //People = new List<SelectListItem> {
+      //  new SelectListItem { Value = "1", Text = "Mike" },
+      //  new SelectListItem { Value = "2", Text = "Pete" },
+      //  new SelectListItem { Value = "3", Text = "Katy" },
+      //  new SelectListItem { Value = "4", Text = "Carl" }
+      //};
+      //}
+
+      //public DayOfWeek DayOfWeek { get; set; }
+      //public DayOfWeek? DayOfWeek { get; set; }
+
+      public int Employee { get; set; }
+      public List<SelectListItem> Staff { get; set; }
+
+      public void OnGet4 ( )
+      {
+            var Sales = new SelectListGroup { Name = "Sales" };
+            var Admin = new SelectListGroup { Name = "Admin" };
+            var IT = new SelectListGroup { Name = "IT" };
+
+            Staff = new List<SelectListItem>
+{
+new SelectListItem{ Value = "1", Text = "Mike", Group = IT},
+new SelectListItem{ Value = "2", Text = "Pete", Group = Sales},
+new SelectListItem{ Value = "3", Text = "Katy", Group = Admin},
+new SelectListItem{ Value = "4", Text = "Carl", Group = Sales}
+};
+      }
+
+      [BindProperty, MaxLength( 300 )]
+      public string MainText { get; set; }
+
+}
+}
+<select asp-for="Number" asp-items="@((List<SelectListItem>)ViewData["Numbers"])">
+      <option value="">Pick one</option>
+</select>
+
+<select asp-for="Number" asp-items="@Numbers">
+      <option value="">Pick one</option>
+</select>
+
+@*<select asp-for="Person" asp-items="@(new SelectList(Model.People, "Id", "Name"))">
+            <option value="">Pick one</option>
+      </select>*@
+
+<select asp-for="Person" asp-items="Model.People">
+      <option value="">Pick one</option>
+</select>
+<select data-val="true" data-val-required="The Person field is required." id="Person" name="Person">
+      <option value="">Pick one</option>
+      <option value="1">Mike</option>
+      <option value="2">Pete</option>
+      <option selected="selected" value="3">Katy</option>
+      <option value="4">Carl</option>
+</select>
+
+@*Enumerations*@
+<select asp-for="DayOfWeek" asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+      <option value="">Pick one</option>
+</select>
+<select data-val="true" data-val-required="The DayOfWeek field is required." id="DayOfWeek" name="DayOfWeek">
+      <option value="">Pick one</option>
+      <option selected="selected" value="0">Sunday</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option>
+</select>
+
+@*OptGroups*@
+<select data-val="true" data-val-required="The Employee field is required." id="Employee" name="Employee">
+      <option value="">Pick one</option>
+      <optgroup label="IT">
+            <option value="1">Mike</option>
+      </optgroup>
+      <optgroup label="Sales">
+            <option value="2">Pete</option>
+            <option value="4">Carl</option>
+      </optgroup>
+      <optgroup label="Admin">
+            <option value="3">Katy</option>
+      </optgroup>
+</select>
+
+@*The Textarea Tag Helper*@
+<textarea asp-for="MainText"></textarea>
+
+<textarea data-val="true"
+          data-val-maxlength="The field MainText must be a string or array type with a maximum length of &#x27;300&#x27;."
+          data-val-maxlength-max="300"
+          id="MainText"
+          name="MainText"></textarea>
+
+@*The Validation Message Tag Helper*@
+<span asp-validation-for="FirstName" class="myclass"></span>
+<span class="myclass field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
+
+The Validation Summary Tag Helper
+<div class="validation-summary-errors" data-valmsg-summary="true">
+      <ul>
+            <li>The FirstName field is required.</li>
+            <li>The LastName field is required.</li>
+            <li>The DateOfBirth field is required.</li>
+      </ul>
+</div>
+<div asp-validation-summary="All">
+      <span>Please correct the following errors</span>
+</div>
+
+@*.validation-summary-valid { display: none; }
+      .validation-summary-valid span { display: none; }*@
+
+@*View Components in Razor Pages*@
+
+@*@await Component.InvokeAsync( "Users" )
+      <vc:user id="@new Random().Next(1, 10)"></vc:user>
+      @await Component.InvokeAsync( "User" , new Random( ).Next( 1 , 10 ) )*@
+
+@*Razor Pages Routing*@
+@functions{
+      public string Title { get; set; }
+
+      public void OnGet5 ( string title )
+      {
+            Title = title;
+      }
+}
+
+@*@page "{title?}"*@
+@{
+
+}
+<h2>@Title</h2>
+
+@*Configuring a custom error page*@
+
+<h1>404 Not found</h1>
+<p>No such page exists at this location.</p>
+
+Validating User Input in Razor Pages
+
+<form method="post">
+      <div>
+            <input asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+      </div>
+      <div>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+      </div>
+      <div>
+            <input asp-for="Password2" />
+            <span asp-validation-for="Password2"></span>
+      </div>
+      <div>
+            <input type="submit" />
+      </div>
+</form>
+<div>
+      <input type="text" data-val="true" data-val-minlength="The field UserName must be a string or array type with a minimum length of &#x27;6&#x27;." data-val-minlength-min="6" data-val-required="The UserName field is required." id="UserName" name="UserName" value="" />
+      <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+      <div>
+            <input type="text" data-val="true" data-val-minlength="The field Password must be a string or array type with a minimum length of &#x27;6&#x27;." data-val-minlength-min="6" data-val-required="The Password field is required." id="Password" name="Password" value="" />
+            <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+      </div>
+      <div>
+            <input type="text" data-val="true" data-val-equalto="&#x27;Password2&#x27; and &#x27;Password&#x27; do not match." data-val-equalto-other="*.Password" data-val-required="The Password2 field is required." id="Password2" name="Password2" value="" />
+            <span class="field-validation-valid" data-valmsg-for="Password2" data-valmsg-replace="true"></span>
+      </div>
+      <div>
+            <input type="submit" />
+      </div>
+
+      <input type="text"
+             data-val="true"
+             data-val-equalto="Make sure both passwords are the same"
+             data-val-equalto-other="*.Password"
+             data-val-required="The Password2 field is required."
+             id="Password2" name="Password2" value="" />
+
+      @section scripts{
+            @await Html.PartialAsync( "_ValidationScriptsPartial" )
+      }
+
+      @*Model Binding*@
+      @functions{
+            public void OnPost555 ( )
+            {
+                  var name = Request.Form["Name"];
+                  var email = Request.Form["Email"];
+                  ViewData[ "confirmation" ] = $"{name}, information will be sent to {email}";
+            }
+
+            public void OnPost44 ( string name , string email )
+            {
+                  ViewData[ "confirmation" ] = $"{name}, information will be sent to {email}";
+            }
+
+            [BindProperty]
+            public string Name2 { get; set; }
+            [BindProperty]
+            public string Email { get; set; }
+            [BindProperty( SupportsGet = true )]
+            public string Email2 { get; set; }
+            [BindProperty( SupportsGet = true )]
+            public string Password { get; set; }
+            public void OnGet444 ( )
+            {
+                  ViewData[ "welcome" ] = $"Welcome {Email2}";
+            }
+
+            public void OnPost56 ( )
+            {
+                  ViewData[ "confirmation" ] = $"{Name2}, information will be sent to {Email2}";
+            }
+
+            public void OnGet444444 ( int id )
+            {
+                  ViewData[ "id" ] = id;
+            }
+
+            [BindProperty]
+            public int Id { get; set; }
+
+            public void OnGet346734 ( )
+            {
+                  ViewData[ "id" ] = Id;
+            }
+
+            public class Login
+            {
+                  public string Email { get; set; }
+                  public string Password { get; set; }
+            }
+
+            [BindProperty]
+            public Login Login2 { get; set; }
+
+            public void OnPost125 ( )
+            {
+                  ViewData[ "welcome" ] = $"Welcome {Login2.Email}";
+            }
+
+            public void OnPost235 ( Login Login )
+            {
+                  ViewData[ "welcome" ] = $"Welcome {Login.Email}";
+            }
+
+            public void OnPost214 ( int[ ] categoryId )
+            {
+                  ViewData[ "categoryId" ] = categoryId;
+            }
+
+            [BindProperty]
+            public int[ ] CategoryId { get; set; } = new int[ 0 ];
+
+            public class Contact
+            {
+                  public string FirstName { get; set; }
+                  public string LastName { get; set; }
+                  public string Email { get; set; }
+            }
+            public void OnPost1532 ( List<Contact> contacts )
+            {
+                  // process the contacts
+            }
+            [BindProperty]
+            public List<Contact> Contacts { get; set; }
+
+      }
+      <h3>@ViewData[ "confirmation" ]</h3>
+      <form class="form-horizontal" method="post">
+            <div class="form-group">
+                  <label for="Name" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Name">
+                  </div>
+            </div>
+            <div class="form-group">
+                  <label for="Email" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Email">
+                  </div>
+            </div>
+            <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Register</button>
+                  </div>
+            </div>
+      </form>
+
+      <h3>Id = @ViewData[ "id" ]</h3>
+
+      <form class="form-horizontal" method="post">
+            <div class="form-group">
+                  <label for="CategoryId" class="col-sm-2 control-label">Which types of film do you like? (Tick all that apply)</label>
+                  <div class="col-sm-10">
+                        <input type="checkbox" name="CategoryId" value="1"> Factual<br />
+                        <input type="checkbox" name="CategoryId" value="2"> Horror<br />
+                        <input type="checkbox" name="CategoryId" value="3"> Historical<br />
+                        <input type="checkbox" name="CategoryId" value="4"> SciFi<br />
+                        <input type="checkbox" name="CategoryId" value="5"> Comedy<br />
+                        <input type="checkbox" name="CategoryId" value="6"> Fantasy<br />
+                  </div>
+            </div>
+            <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                  </div>
+            </div>
+      </form>
+
+      @if ( ViewData[ "categoryId" ] != null )
+      {
+            <h3>You selected the following categories: @string.Join( "," , ( int[ ] ) ViewData[ "categoryId" ] )</h3>
+      }
+
+      @if ( CategoryId.Any( ) )
+      {
+            <h3>You selected the following categories: @string.Join( "," , CategoryId )</h3>
+      }
+
+      <form class="form-horizontal" method="post">
+            <table class="table table-striped">
+                  <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                  </tr>
+                  @for ( var i = 0 ; i < 5 ; i++ )
+                  {
+                        <tr>
+                              <td>
+                                    <input type="text" name="[@i].FirstName" />
+                              </td>
+                              <td>
+                                    <input type="text" name="[@i].LastName" />
+                              </td>
+                              <td>
+                                    <input type="text" name="[@i].Email" />
+                              </td>
+                        </tr>
+                  }
+            </table>
+            <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                  </div>
+            </div>
+      </form>
+      <form class="form-horizontal" method="post">
+            <input type="hidden" asp-for="ContactId">
+            <div class="form-group">
+                  <label asp-for="Name" class="col-sm-2 control-label"></label>
+                  <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="Name">
+                  </div>
+            </div>
+            <div class="form-group">
+                  <label asp-for="Email" class="col-sm-2 control-label"></label>
+                  <div class="col-sm-10">
+                        <input type="text" class="form-control" asp-for="Email">
+                  </div>
+            </div>
+            <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Edit</button>
+                  </div>
+            </div>
+      </form>
+
+      @*Creating Custom Tag Helpers*@
+      <div>
+            <ul class="pagination">
+                  <li class="active"><a href="/page?page=1" title="Click to go to page 1">1</a></li>
+                  <li class=""><a href="/page?page=2" title="Click to go to page 2">2</a></li>
+                  <li class=""><a href="/page?page=3" title="Click to go to page 3">3</a></li>
+                  <li class=""><a href="/page?page=4" title="Click to go to page 4">4</a></li>
+                  <li class=""><a href="/page?page=5" title="Click to go to page 5">5</a></li>
+            </ul>
+      </div>
+
+      <pager current-page="1" link-url="/page" total-page="5"></pager>
